@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import PokemonInfo from "./Components/PokemonInfo";
+import "./index.css";
+import PokemonList from "./Components/PokemonList";
 
 function PokemonSearch() {
   const [pokemonName, setPokemonName] = useState("");
@@ -44,32 +47,14 @@ function PokemonSearch() {
       <button onClick={searchPokemon}>Search Pokemon</button>
 
       {filteredPokemon.length > 0 && pokemonName && (
-        <div>
+        <ul>
           {filteredPokemon.map((p) => (
-            <p
-              style={{ textTransform: "capitalize" }}
-              key={p.name}
-              onClick={() => setPokemonName(p.name)}
-            >
-              {p.name}
-            </p>
+            <PokemonList setPokemonName={setPokemonName} p={p} />
           ))}
-        </div> // This displays results as long as > 0 and if it exists
+        </ul> // This displays results as long as > 0 and if it exists
       )}
 
-      {pokemon && (
-        <div>
-          <h2 style={{ textTransform: "capitalize" }}>{pokemon.name}</h2>
-          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-          <ul>
-            {pokemon.abilities.map((ability, index) => (
-              <li style={{ textTransform: "capitalize" }} key={index}>
-                {ability.ability.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {pokemon && <PokemonInfo pokemon={pokemon} />}
     </div>
   );
 }
